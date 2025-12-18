@@ -1,0 +1,4 @@
+module CNIOWASI {
+    umbrella header "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/checkouts/swift-nio/Sources/CNIOWASI/include/CNIOWASI.h"
+    export *
+}

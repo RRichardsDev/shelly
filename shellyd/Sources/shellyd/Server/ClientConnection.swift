@@ -18,6 +18,7 @@ final class ClientConnection {
     private var isAuthenticated = false
     private var authChallenge: Data?
     private var clientPublicKey: String?
+    private var clientDeviceName: String?
     private var sessionToken: String?
 
     // Pairing state
@@ -28,12 +29,22 @@ final class ClientConnection {
     // Shell session
     private var shellSession: ShellSession?
 
+    // Audit logging
+    private let auditLogger = AuditLogger.shared
+
     init(channel: Channel, configuration: ServerConfiguration) {
         self.channel = channel
         self.configuration = configuration
     }
 
     func cleanup() {
+        // Log disconnection event
+        if isAuthenticated {
+            let clientId = clientPublicKey.map { String($0.hashValue, radix: 16).prefix(12) }.map(String.init) ?? "unknown"
+            let deviceName = clientDeviceName ?? "Unknown Device"
+            auditLogger.logConnection(clientId: clientId, deviceName: deviceName, event: "disconnected")
+        }
+
         shellSession?.stop()
         shellSession = nil
     }
@@ -110,6 +121,9 @@ final class ClientConnection {
 
         case .sudoPassword:
             handleSudoPassword(message, context: context)
+
+        case .settingsUpdate:
+            handleSettingsUpdate(message, context: context)
 
         case .ping:
             sendPong(context: context)
@@ -247,14 +261,20 @@ final class ClientConnection {
                 try? task.run()
 
                 // Use AppleScript to force the app to front after a short delay
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
                     let script = """
                     tell application "ShellyPairingUI" to activate
                     tell application "System Events"
                         set frontmost of process "ShellyPairingUI" to true
                         tell process "ShellyPairingUI"
                             set frontmost to true
-                            perform action "AXRaise" of window 1
+                            -- Find and raise the pairing window by name
+                            repeat with w in windows
+                                if name of w contains "Pairing" or name of w contains "ShellyPairingUI" or name of w is "" then
+                                    perform action "AXRaise" of w
+                                    exit repeat
+                                end if
+                            end repeat
                         end tell
                     end tell
                     """
@@ -277,7 +297,13 @@ final class ClientConnection {
     }
 
     private func sendPairResponse(success: Bool, message: String?, context: ChannelHandlerContext) {
-        let payload = PairResponsePayload(success: success, message: message)
+        // Include certificate fingerprint on successful pairing
+        var fingerprint: String? = nil
+        if success && TLSManager.shared.isTLSConfigured() {
+            fingerprint = try? TLSManager.shared.getFingerprint()
+        }
+
+        let payload = PairResponsePayload(success: success, message: message, certificateFingerprint: fingerprint)
         sendMessage(type: .pairResponse, payload: payload, context: context)
     }
 
@@ -298,8 +324,9 @@ final class ClientConnection {
                 return
             }
 
-            // Store client public key
+            // Store client public key and device name
             clientPublicKey = hello.publicKey
+            clientDeviceName = hello.deviceName
 
             // Generate challenge
             var challengeBytes = [UInt8](repeating: 0, count: 32)
@@ -346,6 +373,9 @@ final class ClientConnection {
                 sessionToken = UUID().uuidString
 
                 sendAuthResult(success: true, message: "Authentication successful", sessionToken: sessionToken, context: context)
+
+                // Send security settings to client
+                sendSettingsSync(context: context)
 
                 // Start shell session
                 startShellSession(context: context)
@@ -420,8 +450,23 @@ final class ClientConnection {
             let config = try ConfigManager.shared.loadConfig()
             let eventLoop = context.eventLoop
 
+            // Configure audit logger
+            auditLogger.configure(
+                enabled: config.auditLoggingEnabled,
+                retentionDays: config.auditLogRetentionDays
+            )
+
+            // Create a client identifier from public key (truncated hash)
+            let clientId = clientPublicKey.map { String($0.hashValue, radix: 16).prefix(12) }.map(String.init) ?? "unknown"
+            let deviceName = clientDeviceName ?? "Unknown Device"
+
+            // Log connection event
+            auditLogger.logConnection(clientId: clientId, deviceName: deviceName, event: "connected")
+
             shellSession = ShellSession(
                 shell: config.shell,
+                clientId: clientId,
+                deviceName: deviceName,
                 onOutput: { [weak self] data in
                     // Must dispatch to event loop since shell output comes from different queue
                     eventLoop.execute {
@@ -568,5 +613,100 @@ final class ClientConnection {
     private func sendError(code: String, message: String, context: ChannelHandlerContext) {
         let payload = ErrorPayload(code: code, message: message, recoverable: true)
         sendMessage(type: .error, payload: payload, context: context)
+    }
+
+    // MARK: - Settings Sync
+
+    private func sendSettingsSync(context: ChannelHandlerContext) {
+        do {
+            let config = try ConfigManager.shared.loadConfig()
+
+            // Get certificate fingerprint if TLS is configured
+            var fingerprint: String? = nil
+            if config.tlsEnabled && TLSManager.shared.isTLSConfigured() {
+                fingerprint = try? TLSManager.shared.getFingerprint()
+            }
+
+            let payload = SecuritySettingsPayload(from: config, certificateFingerprint: fingerprint)
+            sendMessage(type: .settingsSync, payload: payload, context: context)
+
+            if configuration.verbose {
+                print("📤 Sent settings sync to client")
+            }
+        } catch {
+            if configuration.verbose {
+                print("❌ Failed to send settings sync: \(error)")
+            }
+        }
+    }
+
+    private func handleSettingsUpdate(_ message: ShellyMessage, context: ChannelHandlerContext) {
+        guard isAuthenticated else {
+            sendError(code: "NOT_AUTHENTICATED", message: "Not authenticated", context: context)
+            return
+        }
+
+        do {
+            let update = try JSONDecoder().decode(SettingsUpdatePayload.self, from: message.payload)
+            var config = try ConfigManager.shared.loadConfig()
+            var reconnectRequired = false
+
+            // Apply the setting change
+            switch update.setting {
+            case "tlsEnabled":
+                if let value = update.value.boolValue {
+                    config.tlsEnabled = value
+                    reconnectRequired = true  // TLS changes require reconnect
+                }
+            case "certificatePinningEnabled":
+                if let value = update.value.boolValue {
+                    config.certificatePinningEnabled = value
+                }
+            case "sessionTimeoutEnabled":
+                if let value = update.value.boolValue {
+                    config.sessionTimeoutEnabled = value
+                }
+            case "sessionTimeoutSeconds":
+                if let value = update.value.intValue {
+                    config.sessionTimeoutSeconds = value
+                }
+            case "auditLoggingEnabled":
+                if let value = update.value.boolValue {
+                    config.auditLoggingEnabled = value
+                    // Reconfigure audit logger immediately
+                    auditLogger.configure(enabled: value, retentionDays: config.auditLogRetentionDays)
+                }
+            case "auditLogRetentionDays":
+                if let value = update.value.intValue {
+                    config.auditLogRetentionDays = value
+                    // Reconfigure audit logger immediately
+                    auditLogger.configure(enabled: config.auditLoggingEnabled, retentionDays: value)
+                }
+            default:
+                sendSettingsConfirm(setting: update.setting, success: false, message: "Unknown setting", reconnectRequired: false, context: context)
+                return
+            }
+
+            // Save the updated config
+            try ConfigManager.shared.saveConfig(config)
+
+            // Send confirmation
+            sendSettingsConfirm(setting: update.setting, success: true, message: nil, reconnectRequired: reconnectRequired, context: context)
+
+            if configuration.verbose {
+                print("⚙️ Updated setting '\(update.setting)' (reconnect required: \(reconnectRequired))")
+            }
+
+        } catch {
+            if configuration.verbose {
+                print("❌ Failed to handle settings update: \(error)")
+            }
+            sendSettingsConfirm(setting: "unknown", success: false, message: error.localizedDescription, reconnectRequired: false, context: context)
+        }
+    }
+
+    private func sendSettingsConfirm(setting: String, success: Bool, message: String?, reconnectRequired: Bool, context: ChannelHandlerContext) {
+        let payload = SettingsConfirmPayload(setting: setting, success: success, message: message, reconnectRequired: reconnectRequired)
+        sendMessage(type: .settingsConfirm, payload: payload, context: context)
     }
 }

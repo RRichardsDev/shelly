@@ -39,6 +39,11 @@ enum ShellyMessageType: String, Codable {
     case longRunningCommand
     case commandComplete
 
+    // Settings sync
+    case settingsSync       // Mac -> iPhone: Full settings on connect
+    case settingsUpdate     // iPhone -> Mac: Request setting change
+    case settingsConfirm    // Mac -> iPhone: Confirm change applied
+
     // System
     case ping
     case pong
@@ -115,6 +120,7 @@ struct PairVerifyPayload: Codable {
 struct PairResponsePayload: Codable {
     let success: Bool
     let message: String?
+    let certificateFingerprint: String?  // TLS certificate fingerprint for pinning
 }
 
 // MARK: - Terminal Payloads
@@ -194,3 +200,84 @@ struct ErrorPayload: Codable {
 }
 
 struct EmptyPayload: Codable {}
+
+// MARK: - Settings Sync Payloads
+
+struct SecuritySettingsPayload: Codable {
+    var tlsEnabled: Bool
+    var certificatePinningEnabled: Bool
+    var sessionTimeoutEnabled: Bool
+    var sessionTimeoutSeconds: Int
+    var auditLoggingEnabled: Bool
+    var auditLogRetentionDays: Int
+    var certificateFingerprint: String?  // Sent when TLS is enabled
+
+    init(from config: Config, certificateFingerprint: String? = nil) {
+        self.tlsEnabled = config.tlsEnabled
+        self.certificatePinningEnabled = config.certificatePinningEnabled
+        self.sessionTimeoutEnabled = config.sessionTimeoutEnabled
+        self.sessionTimeoutSeconds = config.sessionTimeoutSeconds
+        self.auditLoggingEnabled = config.auditLoggingEnabled
+        self.auditLogRetentionDays = config.auditLogRetentionDays
+        self.certificateFingerprint = certificateFingerprint
+    }
+}
+
+struct SettingsUpdatePayload: Codable {
+    let setting: String
+    let value: SettingsValue
+}
+
+struct SettingsConfirmPayload: Codable {
+    let setting: String
+    let success: Bool
+    let message: String?
+    let reconnectRequired: Bool  // True when TLS setting changes
+}
+
+// Type-safe settings value wrapper
+enum SettingsValue: Codable {
+    case bool(Bool)
+    case int(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let boolValue = try? container.decode(Bool.self) {
+            self = .bool(boolValue)
+        } else if let intValue = try? container.decode(Int.self) {
+            self = .int(intValue)
+        } else if let stringValue = try? container.decode(String.self) {
+            self = .string(stringValue)
+        } else {
+            throw DecodingError.typeMismatch(
+                SettingsValue.self,
+                DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unsupported value type")
+            )
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .bool(let value): try container.encode(value)
+        case .int(let value): try container.encode(value)
+        case .string(let value): try container.encode(value)
+        }
+    }
+
+    var boolValue: Bool? {
+        if case .bool(let value) = self { return value }
+        return nil
+    }
+
+    var intValue: Int? {
+        if case .int(let value) = self { return value }
+        return nil
+    }
+
+    var stringValue: String? {
+        if case .string(let value) = self { return value }
+        return nil
+    }
+}

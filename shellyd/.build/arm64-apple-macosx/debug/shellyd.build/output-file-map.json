@@ -1,0 +1,96 @@
+{
+  "": {
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/AuthManager.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuthManager.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuthManager.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuthManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuthManager.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuthManager.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/PairingManager.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PairingManager.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PairingManager.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PairingManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PairingManager.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PairingManager.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/PublicKeyStore.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PublicKeyStore.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PublicKeyStore.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PublicKeyStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PublicKeyStore.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/PublicKeyStore.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Configuration/ConfigManager.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ConfigManager.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ConfigManager.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ConfigManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ConfigManager.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ConfigManager.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Protocol/ShellyMessage.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellyMessage.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellyMessage.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellyMessage~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellyMessage.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellyMessage.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Security/AuditLogger.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuditLogger.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuditLogger.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuditLogger~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuditLogger.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/AuditLogger.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Security/TLSManager.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/TLSManager.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/TLSManager.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/TLSManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/TLSManager.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/TLSManager.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/BonjourAdvertiser.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/BonjourAdvertiser.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/BonjourAdvertiser.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/BonjourAdvertiser~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/BonjourAdvertiser.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/BonjourAdvertiser.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/ClientConnection.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ClientConnection.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ClientConnection.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ClientConnection~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ClientConnection.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ClientConnection.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/WebSocketServer.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/WebSocketServer.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/WebSocketServer.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/WebSocketServer~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/WebSocketServer.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/WebSocketServer.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Shellyd.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/Shellyd.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/Shellyd.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/Shellyd~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/Shellyd.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/Shellyd.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Terminal/ShellSession.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellSession.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellSession.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellSession~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellSession.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/ShellSession.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Utilities/SHA1.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/SHA1.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/SHA1.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/SHA1~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/SHA1.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellyd.build/SHA1.dia"
+  }
+}

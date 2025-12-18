@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/checkouts/swift-nio/Sources/NIOFileSystem/Exports.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/Exports.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/Exports.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/Exports~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/Exports.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/NIOFileSystem.build/Exports.dia"
+  }
+}

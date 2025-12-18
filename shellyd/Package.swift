@@ -30,5 +30,17 @@ let package = Package(
                 .product(name: "Crypto", package: "swift-crypto"),
             ]
         ),
+        .testTarget(
+            name: "shellydTests",
+            dependencies: [
+                .product(name: "NIO", package: "swift-nio"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOPosix", package: "swift-nio"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
+                .product(name: "NIOWebSocket", package: "swift-nio"),
+                .product(name: "NIOSSL", package: "swift-nio-ssl"),
+                .product(name: "Crypto", package: "swift-crypto"),
+            ]
+        ),
     ]
 )

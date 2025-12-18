@@ -1,0 +1,47 @@
+{
+  "": {
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/AuthenticationTests.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/AuthenticationTests.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/AuthenticationTests.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/AuthenticationTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/AuthenticationTests.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/AuthenticationTests.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/IntegrationTests.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/IntegrationTests.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/IntegrationTests.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/IntegrationTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/IntegrationTests.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/IntegrationTests.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/ProtocolTests.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/ProtocolTests.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/ProtocolTests.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/ProtocolTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/ProtocolTests.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/ProtocolTests.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/TestHelpers.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestHelpers.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestHelpers.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestHelpers.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestHelpers.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/TestProtocol.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestProtocol.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestProtocol.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestProtocol.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/TestProtocol.dia"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Tests/shellydTests/WebSocketTestClient.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/WebSocketTestClient.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/WebSocketTestClient.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/WebSocketTestClient~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/WebSocketTestClient.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydTests.build/WebSocketTestClient.dia"
+  }
+}

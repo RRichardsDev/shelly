@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI.o",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/Sources/ShellyPairingUI.swift": {
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyPairingUI/.build/arm64-apple-macosx/release/ShellyPairingUI.build/ShellyPairingUI.dia"
+  }
+}

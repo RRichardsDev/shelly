@@ -11,11 +11,14 @@ import NIOCore
 import NIOPosix
 import NIOHTTP1
 import NIOWebSocket
+import NIOSSL
 
 final class WebSocketServer {
     private let configuration: ServerConfiguration
-    private var channel: Channel?
+    private var plainChannel: Channel?   // ws:// on main port
+    private var tlsChannel: Channel?      // wss:// on TLS port
     private let group: MultiThreadedEventLoopGroup
+    private var sslContext: NIOSSLContext?
 
     init(configuration: ServerConfiguration) {
         self.configuration = configuration
@@ -29,6 +32,26 @@ final class WebSocketServer {
         // Setup signal handling
         setupSignalHandlers()
 
+        // Always try to setup TLS (generate cert so wss:// port is always available)
+        var tlsAvailable = false
+        print("🔐 Attempting to load TLS...")
+        fflush(stdout)
+        do {
+            sslContext = try TLSManager.shared.loadSSLContext()
+            tlsAvailable = true
+            print("✅ TLS loaded successfully")
+            fflush(stdout)
+            if configuration.verbose {
+                let fingerprint = try TLSManager.shared.getFingerprint()
+                print("🔐 TLS certificate fingerprint:")
+                print("   \(fingerprint)")
+                fflush(stdout)
+            }
+        } catch {
+            print("⚠️ TLS not available: \(error)")
+            fflush(stdout)
+        }
+
         let upgrader = NIOWebSocketServerUpgrader(
             shouldUpgrade: { channel, head in
                 channel.eventLoop.makeSucceededFuture(HTTPHeaders())
@@ -38,7 +61,8 @@ final class WebSocketServer {
             }
         )
 
-        let bootstrap = ServerBootstrap(group: group)
+        // Plain WebSocket bootstrap (always runs on main port)
+        let plainBootstrap = ServerBootstrap(group: group)
             .serverChannelOption(ChannelOptions.backlog, value: 256)
             .serverChannelOption(ChannelOptions.socketOption(.so_reuseaddr), value: 1)
             .childChannelInitializer { channel in
@@ -57,10 +81,44 @@ final class WebSocketServer {
             .childChannelOption(ChannelOptions.maxMessagesPerRead, value: 16)
 
         do {
-            channel = try await bootstrap.bind(host: configuration.host, port: configuration.port).get()
+            // Always bind plain ws:// on main port
+            plainChannel = try await plainBootstrap.bind(host: configuration.host, port: configuration.port).get()
+            print("🚀 Shelly daemon listening on ws://\(configuration.host):\(configuration.port)")
 
-            // Keep running until channel is closed
-            try await channel?.closeFuture.get()
+            // If TLS is available, also bind wss:// on TLS port
+            if tlsAvailable, let context = sslContext {
+                let tlsPort = configuration.port + 1
+                let tlsBootstrap = ServerBootstrap(group: group)
+                    .serverChannelOption(ChannelOptions.backlog, value: 256)
+                    .serverChannelOption(ChannelOptions.socketOption(.so_reuseaddr), value: 1)
+                    .childChannelInitializer { channel in
+                        let sslHandler = NIOSSLServerHandler(context: context)
+                        return channel.pipeline.addHandler(sslHandler).flatMap {
+                            let httpHandler = HTTPHandler(configuration: self.configuration)
+                            let config: NIOHTTPServerUpgradeConfiguration = (
+                                upgraders: [upgrader],
+                                completionHandler: { _ in
+                                    channel.pipeline.removeHandler(httpHandler, promise: nil)
+                                }
+                            )
+                            return channel.pipeline.configureHTTPServerPipeline(withServerUpgrade: config).flatMap {
+                                channel.pipeline.addHandler(httpHandler)
+                            }
+                        }
+                    }
+                    .childChannelOption(ChannelOptions.socketOption(.so_reuseaddr), value: 1)
+                    .childChannelOption(ChannelOptions.maxMessagesPerRead, value: 16)
+
+                do {
+                    tlsChannel = try await tlsBootstrap.bind(host: configuration.host, port: tlsPort).get()
+                    print("🔒 TLS listening on wss://\(configuration.host):\(tlsPort)")
+                } catch {
+                    print("⚠️ Could not bind TLS port \(tlsPort): \(error)")
+                }
+            }
+
+            // Keep running until plain channel is closed
+            try await plainChannel?.closeFuture.get()
         } catch {
             print("Failed to start server: \(error)")
             throw error
@@ -70,7 +128,8 @@ final class WebSocketServer {
     func stop() {
         print("\nShutting down...")
 
-        channel?.close(promise: nil)
+        plainChannel?.close(promise: nil)
+        tlsChannel?.close(promise: nil)
 
         do {
             try group.syncShutdownGracefully()
@@ -171,8 +230,15 @@ final class WebSocketFrameHandler: ChannelInboundHandler {
     func handlerAdded(context: ChannelHandlerContext) {
         clientConnection = ClientConnection(channel: context.channel, configuration: configuration)
 
-        if configuration.verbose {
-            print("Client connected: \(context.channel.remoteAddress?.description ?? "unknown")")
+        // Log connection with port to show secure vs non-secure
+        let remoteAddr = context.channel.remoteAddress?.description ?? "unknown"
+        if let localAddr = context.channel.localAddress {
+            let port = localAddr.port ?? 0
+            let isSecure = port == configuration.port + 1
+            let secureIndicator = isSecure ? "🔒 wss" : "🌐 ws"
+            print("\(secureIndicator) Client connected from \(remoteAddr) on port \(port)")
+        } else {
+            print("🌐 Client connected from \(remoteAddr)")
         }
     }
 
@@ -180,8 +246,14 @@ final class WebSocketFrameHandler: ChannelInboundHandler {
         clientConnection?.cleanup()
         clientConnection = nil
 
-        if configuration.verbose {
-            print("Client disconnected")
+        // Log disconnection with port info
+        if let localAddr = context.channel.localAddress {
+            let port = localAddr.port ?? 0
+            let isSecure = port == configuration.port + 1
+            let secureIndicator = isSecure ? "🔒 wss" : "🌐 ws"
+            print("\(secureIndicator) Client disconnected from port \(port)")
+        } else {
+            print("🌐 Client disconnected")
         }
     }
 

@@ -12,6 +12,11 @@ final class ShellSession {
     private let onOutput: (Data) -> Void
     private let onSudoPrompt: (String) -> Void
 
+    // Audit logging
+    private let clientId: String
+    private let deviceName: String
+    private let auditLogger = AuditLogger.shared
+
     private var masterFd: Int32 = -1
     private var slaveFd: Int32 = -1
     private var childPid: pid_t = 0
@@ -19,16 +24,21 @@ final class ShellSession {
 
     private var isRunning = false
 
-    // Sudo detection
+    // Sudo detection and command tracking
     private var outputBuffer = Data()
     private var lastCommand = ""
+    private var inputBuffer = ""  // Buffer for tracking typed commands
 
     init(
         shell: String,
+        clientId: String,
+        deviceName: String,
         onOutput: @escaping (Data) -> Void,
         onSudoPrompt: @escaping (String) -> Void
     ) {
         self.shell = shell
+        self.clientId = clientId
+        self.deviceName = deviceName
         self.onOutput = onOutput
         self.onSudoPrompt = onSudoPrompt
     }
@@ -108,11 +118,27 @@ final class ShellSession {
     func write(_ data: Data) {
         guard isRunning, masterFd >= 0 else { return }
 
-        // Track commands for sudo detection
+        // Track commands for sudo detection and audit logging
         if let text = String(data: data, encoding: .utf8) {
             if text.contains("\r") || text.contains("\n") {
-                // Command submitted
-                lastCommand = outputBuffer.isEmpty ? "" : String(data: outputBuffer, encoding: .utf8) ?? ""
+                // Command submitted - log it
+                let command = inputBuffer.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !command.isEmpty {
+                    auditLogger.logCommand(command, clientId: clientId, deviceName: deviceName)
+                }
+                lastCommand = command
+                inputBuffer = ""
+            } else if text == "\u{7F}" || text == "\u{08}" {
+                // Backspace - remove last character from buffer
+                if !inputBuffer.isEmpty {
+                    inputBuffer.removeLast()
+                }
+            } else if text == "\u{03}" {
+                // Ctrl+C - clear buffer
+                inputBuffer = ""
+            } else {
+                // Regular character - add to buffer
+                inputBuffer += text
             }
         }
 

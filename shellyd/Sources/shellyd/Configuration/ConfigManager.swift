@@ -35,6 +35,18 @@ final class ConfigManager {
         configDirectory.appendingPathComponent("shellyd.log")
     }
 
+    var auditLogPath: URL {
+        configDirectory.appendingPathComponent("audit.log")
+    }
+
+    var tlsCertificatePath: URL {
+        configDirectory.appendingPathComponent("server.crt")
+    }
+
+    var tlsPrivateKeyPath: URL {
+        configDirectory.appendingPathComponent("server.key")
+    }
+
     // MARK: - Setup
 
     func ensureConfigDirectory() throws {
@@ -103,6 +115,14 @@ struct Config: Codable {
     var sessionTimeout: TimeInterval
     var maxConnections: Int
 
+    // Security settings (all disabled by default)
+    var tlsEnabled: Bool
+    var certificatePinningEnabled: Bool
+    var sessionTimeoutEnabled: Bool
+    var sessionTimeoutSeconds: Int
+    var auditLoggingEnabled: Bool
+    var auditLogRetentionDays: Int
+
     init(
         port: Int = 8765,
         host: String = "0.0.0.0",
@@ -110,7 +130,13 @@ struct Config: Codable {
         enableSudoInterception: Bool = true,
         pushNotificationsEnabled: Bool = false,
         sessionTimeout: TimeInterval = 3600,
-        maxConnections: Int = 5
+        maxConnections: Int = 5,
+        tlsEnabled: Bool = false,
+        certificatePinningEnabled: Bool = false,
+        sessionTimeoutEnabled: Bool = false,
+        sessionTimeoutSeconds: Int = 300,
+        auditLoggingEnabled: Bool = false,
+        auditLogRetentionDays: Int = 30
     ) {
         self.port = port
         self.host = host
@@ -119,6 +145,30 @@ struct Config: Codable {
         self.pushNotificationsEnabled = pushNotificationsEnabled
         self.sessionTimeout = sessionTimeout
         self.maxConnections = maxConnections
+        self.tlsEnabled = tlsEnabled
+        self.certificatePinningEnabled = certificatePinningEnabled
+        self.sessionTimeoutEnabled = sessionTimeoutEnabled
+        self.sessionTimeoutSeconds = sessionTimeoutSeconds
+        self.auditLoggingEnabled = auditLoggingEnabled
+        self.auditLogRetentionDays = auditLogRetentionDays
+    }
+
+    // Custom decoder with defaults for missing keys
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        port = try container.decodeIfPresent(Int.self, forKey: .port) ?? 8765
+        host = try container.decodeIfPresent(String.self, forKey: .host) ?? "0.0.0.0"
+        shell = try container.decodeIfPresent(String.self, forKey: .shell) ?? "/bin/zsh"
+        enableSudoInterception = try container.decodeIfPresent(Bool.self, forKey: .enableSudoInterception) ?? true
+        pushNotificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .pushNotificationsEnabled) ?? false
+        sessionTimeout = try container.decodeIfPresent(TimeInterval.self, forKey: .sessionTimeout) ?? 3600
+        maxConnections = try container.decodeIfPresent(Int.self, forKey: .maxConnections) ?? 5
+        tlsEnabled = try container.decodeIfPresent(Bool.self, forKey: .tlsEnabled) ?? false
+        certificatePinningEnabled = try container.decodeIfPresent(Bool.self, forKey: .certificatePinningEnabled) ?? false
+        sessionTimeoutEnabled = try container.decodeIfPresent(Bool.self, forKey: .sessionTimeoutEnabled) ?? false
+        sessionTimeoutSeconds = try container.decodeIfPresent(Int.self, forKey: .sessionTimeoutSeconds) ?? 300
+        auditLoggingEnabled = try container.decodeIfPresent(Bool.self, forKey: .auditLoggingEnabled) ?? false
+        auditLogRetentionDays = try container.decodeIfPresent(Int.self, forKey: .auditLogRetentionDays) ?? 30
     }
 }
 

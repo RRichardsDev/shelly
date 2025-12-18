@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstaller.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstaller.o",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Sources/ShellyInstallerApp.swift": {
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.dia"
+  }
+}

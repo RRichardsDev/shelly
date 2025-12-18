@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/master.swiftdeps"
+  },
+  "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/runner.d",
+    "object": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/rhodririchards/Documents/xcode/Shelly/shellyd/.build/arm64-apple-macosx/debug/shellydPackageTests.build/runner.dia"
+  }
+}

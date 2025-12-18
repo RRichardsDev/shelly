@@ -1,0 +1,66 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "ShellyInstaller-arm64-apple-macosx26.0-release.exe": ["<ShellyInstaller-arm64-apple-macosx26.0-release.exe>"]
+  "ShellyInstaller-arm64-apple-macosx26.0-release.module": ["<ShellyInstaller-arm64-apple-macosx26.0-release.module>"]
+  "main": ["<ShellyInstaller-arm64-apple-macosx26.0-release.exe>","<ShellyInstaller-arm64-apple-macosx26.0-release.module>"]
+  "test": ["<ShellyInstaller-arm64-apple-macosx26.0-release.exe>","<ShellyInstaller-arm64-apple-macosx26.0-release.module>"]
+default: "main"
+nodes:
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Sources/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Sources/ShellyInstallerApp.swift"]
+    outputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/sources"]
+    description: "Write auxiliary file /Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/sources"
+
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swift.o"]
+    outputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.product/Objects.LinkFileList"
+
+  "/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+
+  "<ShellyInstaller-arm64-apple-macosx26.0-release.exe>":
+    tool: phony
+    inputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller"]
+    outputs: ["<ShellyInstaller-arm64-apple-macosx26.0-release.exe>"]
+
+  "<ShellyInstaller-arm64-apple-macosx26.0-release.module>":
+    tool: phony
+    inputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swift.o","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/Modules/ShellyInstaller.swiftmodule"]
+    outputs: ["<ShellyInstaller-arm64-apple-macosx26.0-release.module>"]
+
+  "C.ShellyInstaller-arm64-apple-macosx26.0-release.exe":
+    tool: shell
+    inputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swift.o","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.product/Objects.LinkFileList"]
+    outputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller"]
+    description: "Linking ./.build/arm64-apple-macosx/release/ShellyInstaller"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release","-o","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller","-module-name","ShellyInstaller","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-dead_strip","-Xlinker","-alias","-Xlinker","_ShellyInstaller_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx14.0","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.ShellyInstaller-arm64-apple-macosx26.0-release.module":
+    tool: shell
+    inputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Sources/ShellyInstallerApp.swift","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/sources"]
+    outputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/ShellyInstallerApp.swift.o","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/Modules/ShellyInstaller.swiftmodule"]
+    description: "Compiling Swift Module 'ShellyInstaller' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","ShellyInstaller","-emit-dependencies","-emit-module","-emit-module-path","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/Modules/ShellyInstaller.swiftmodule","-output-file-map","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/output-file-map.json","-whole-module-optimization","-num-threads","10","-c","@/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ShellyInstaller.build/sources","-I","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/Modules","-target","arm64-apple-macosx14.0","-whole-module-optimization","-num-threads","10","-serialize-diagnostics","-O","-j10","-DSWIFT_PACKAGE","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/.build/arm64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","ShellyInstaller_main","-parse-as-library","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","shellyinstaller"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Sources/","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Package.swift","/Users/rhodririchards/Documents/xcode/Shelly/ShellyInstaller/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

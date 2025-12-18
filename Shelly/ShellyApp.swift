@@ -10,9 +10,13 @@ import SwiftData
 
 @main
 struct ShellyApp: App {
+    @State private var appState = AppState()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            HostConnection.self,
+            CommandHistory.self,
+            SSHKeyPair.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,7 +29,14 @@ struct ShellyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if appState.isUnlocked || !appState.requiresAuthentication {
+                    MainTabView()
+                } else {
+                    LockScreenView()
+                }
+            }
+            .environment(appState)
         }
         .modelContainer(sharedModelContainer)
     }

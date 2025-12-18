@@ -1,0 +1,13 @@
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/AuthManager.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/PairingManager.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Authentication/PublicKeyStore.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Configuration/ConfigManager.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Protocol/ShellyMessage.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Security/AuditLogger.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Security/TLSManager.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/BonjourAdvertiser.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/ClientConnection.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Server/WebSocketServer.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Shellyd.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Terminal/ShellSession.swift
+/Users/rhodririchards/Documents/xcode/Shelly/shellyd/Sources/shellyd/Utilities/SHA1.swift
